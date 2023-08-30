@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Alarm</title>
+    <link rel="icon" type="image/png" href="../images/clock.png">
+    <style>
+        * {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: royalblue;
+            color: white;
+            font-size: 70px;
+            margin-bottom: 2%;
+        }
+
+        label {
+            font-size: 40px;
+
+        }
+
+        input {
+            padding: 10px;
+            font-size: 30px;
+        }
+
+        a {
+            text-decoration: none;
+            border: 3px solid black;
+            padding: 12px 14px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 2%;
+            margin-left: 1%;
+            font-size: 20px;
+            background: linear-gradient(to top left, royalblue, red);
+            color: white;
+            transition: 0.7s;
+        }
+
+        a:hover {
+            background: linear-gradient(to top right, royalblue, red);
+            transition: 0.7s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Set Alarm</h1>
+    <label for="">Set The Alarm : </label>
+    <input type="time" id="setAlarm" placeholder="Set Time">
+    <br>
+    <a href="#" onclick="alarm()" title="Start Alarm">Start Alarm</a>
+    <a href="#" id="stopAlarm" title="Stop Alarm">Stop Alarm</a>
+    <audio src="https://www.airforshare.com/files/hZQFKq.mp3" loop id="#audio"></audio>
+
+    <script>
+
+        function alarm() {
+
+            let alarm = document.querySelector("#setAlarm").value;
+
+            if (!alarm) {
+                alert("Please Set the Alarm Time");
+                return;
+            }
+
+            let presentTime = new Date();
+            console.log(presentTime);
+            let futureTime = new Date(presentTime.toDateString() + " " + alarm);
+            console.log(futureTime)
+            let remainTime = futureTime - presentTime;
+
+            if (remainTime < 0) {
+                alert("The specified time is in the past. Please set a future time.");
+                return;
+            }
+
+            setTimeout(function () {
+                alert("Time To Wake up");
+                let audio = new Audio("../class-work/alarm.mp3")
+                audio.play()
+
+                document.querySelector("#stopAlarm").addEventListener('click', function () {
+                    audio.pause();
+                })
+            }, remainTime);
+        }
+
+    </script>
+</body>
+
+</html>
